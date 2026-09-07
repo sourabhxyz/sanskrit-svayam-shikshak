@@ -15,7 +15,9 @@ Every page of the scan was OCR'd and then proofread by eye against the page imag
 | `corrected/bhag2-00-moolakshar.md` | मूलाक्षर-व्यवस्था (pronunciation chapter opening Part 2) |
 | `corrected/bhag2-paath-01.md` … `bhag2-paath-59.md` | Part 2, lessons 1–59 |
 | `errata.md` | शुद्धि-पत्र: table of substantive corrections, keyed to the printed page numbers |
-| `build.sh` | Builds a single Markdown file, an HTML file and an EPUB into `build/` (needs pandoc) |
+| `build.sh` | Builds a single Markdown file, an HTML file, an EPUB and a PDF into `build/` (needs pandoc; typst for the PDF) |
+| `book.typst` | Typst template for the PDF: A5 pages, running heads, contents, per-lesson footnotes |
+| `fonts/` | Noto Serif Devanagari (SIL Open Font License), embedded in the PDF so it builds identically everywhere |
 
 ## Conventions used in the text
 
@@ -33,7 +35,9 @@ Every page of the scan was OCR'd and then proofread by eye against the page imag
 ./build.sh
 ```
 
-produces `build/sanskrit-svayam-shikshak.md`, `.html` (self-contained, with a Devanagari font stack) and `.epub`. Only pandoc and python3 are required.
+produces `build/sanskrit-svayam-shikshak.md`, `.html` (self-contained, with a Devanagari font stack), `.epub` and `.pdf`. pandoc and python3 are required; the PDF additionally needs [typst](https://typst.app) (0.11 or later) and is skipped if it is not installed.
+
+The PDF is a typeset A5 book: title page, two-column contents, part-title pages, each lesson starting on a fresh page with running heads (book title and part on the left-hand page, lesson on the right-hand page), tables that break across pages, and footnotes numbered afresh in every lesson as in the printed book. It is set in the bundled Noto Serif Devanagari. Build outputs are not committed; the PDF is meant to be attached to a release.
 
 ## Errata
 

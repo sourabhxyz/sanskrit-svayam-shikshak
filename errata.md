@@ -3,7 +3,7 @@
 This file lists the substantive corrections made to the 2016 Rajpal & Sons printing while preparing the corrected edition. Pure OCR artefacts are not listed. Page numbers are the printed page numbers of the original.
 
 | Page | Original | Corrected | Note |
-|---|---|---|---|
+|--------|-------------|-------------|-------------------|
 | परिचय (p. 3) | लाहीर | लाहौर | misprint |
 | परिचय (p. 3) | जे. जे. स्कूल आव आर्ट्स | जे. जे. स्कूल ऑफ़ आर्ट्स | spelling |
 | परिचय (p. 3) | 1969 में अपने देहान्त | 1968 में अपने देहान्त | Pt. Satvalekar died on 31 July 1968 |

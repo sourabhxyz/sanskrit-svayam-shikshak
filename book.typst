@@ -1,0 +1,115 @@
+// Pandoc template for the PDF edition of संस्कृत स्वयं-शिक्षक.
+// Used by build.sh:  pandoc ... -t typst --template=book.typst
+// Compiled with:     typst compile --font-path fonts ...
+//
+// Dollar-delimited variables are filled in by pandoc from the YAML metadata.
+
+#let booktitle = [$title$]
+#let bodyfont = ("Noto Serif Devanagari", "Noto Serif", "Linux Libertine")
+// Part titles ("प्रथम भाग", "द्वितीय भाग") get a page of their own and are shown
+// in the running head; every other level-1 heading is a lesson or chapter.
+#let parts = ("प्रथम भाग", "द्वितीय भाग")
+#let heading-text(h) = if h.body.has("text") { h.body.text } else { "" }
+#let is-part(h) = parts.contains(heading-text(h))
+
+#set document(title: "$title$", author: "$author$")
+#set text(font: bodyfont, size: 10pt, lang: "$lang$", fallback: true)
+#set par(justify: true, leading: 0.75em)
+#set page(
+  paper: "a5",
+  margin: (inside: 18mm, outside: 15mm, top: 19mm, bottom: 18mm),
+  // Running head: book title on even pages, current lesson on odd pages.
+  // Nothing on pages where a lesson (level-1 heading) begins.
+  header: context {
+    let pg = here().page()
+    let chapters = query(heading.where(level: 1))
+    if chapters.any(h => h.location().page() == pg) { return }
+    let before = chapters.filter(h => h.location().page() < pg)
+    if before.len() == 0 { return }
+    set text(size: 8.5pt, weight: "regular", fill: luma(60))
+    let part = before.filter(is-part).at(-1, default: none)
+    if calc.even(pg) {
+      align(left, if part == none { booktitle } else { [#booktitle · #part.body] })
+    } else {
+      align(right, before.last().body)
+    }
+    v(-0.55em)
+    line(length: 100%, stroke: 0.4pt + luma(170))
+  },
+  footer: context {
+    set text(size: 9pt, weight: "regular")
+    align(center, counter(page).display("1"))
+  },
+)
+
+// Every level-1 heading starts a fresh page; footnote numbers restart there,
+// as they do in the printed book.
+#show heading.where(level: 1): it => {
+  pagebreak(weak: true)
+  counter(footnote).update(0)
+  if is-part(it) {
+    v(35%)
+    align(center, text(size: 22pt, weight: "bold", it.body))
+    pagebreak(weak: true)
+  } else {
+    v(1.2em)
+    block(below: 1.3em, text(size: 16pt, weight: "bold", it.body))
+  }
+}
+#show heading.where(level: 2): it => block(above: 1.4em, below: 0.7em,
+  text(size: 11.5pt, weight: "bold", it.body))
+#show heading.where(level: 3): it => block(above: 1.2em, below: 0.6em,
+  text(size: 10.5pt, weight: "bold", it.body))
+
+// Tables: pandoc wraps each table in a (centred, unbreakable) figure. Unwrap
+// it so tables sit flush left and may break across pages.
+#show figure.where(kind: table): it => block(breakable: true, above: 1em, below: 1em, it.body)
+#set table(
+  inset: (x: 7pt, y: 3.5pt),
+  stroke: (x, y) => (bottom: 0.4pt + luma(200)),
+)
+#show table.header: set text(weight: "bold")
+#show table: set par(justify: false)
+#show raw: set text(font: bodyfont)
+
+#set enum(indent: 0.6em, body-indent: 0.6em)
+#set list(indent: 0.6em, body-indent: 0.6em)
+#show footnote.entry: set text(size: 8.3pt)
+#set footnote.entry(separator: line(length: 30%, stroke: 0.4pt))
+#show terms.item: it => block(breakable: false)[
+  #text(weight: "bold")[#it.term]
+  #block(inset: (left: 1.5em, top: -0.4em))[#it.description]
+]
+#let horizontalrule = line(start: (25%,0%), end: (75%,0%))
+#show link: set text(fill: rgb("#1a4d8f"))
+
+// ---------- Title page ----------
+#page(header: none, footer: none)[
+  #v(22%)
+  #align(center)[
+    #text(size: 26pt, weight: "bold", booktitle)
+    #v(0.8em)
+    $if(subtitle)$#text(size: 13pt)[$subtitle$]$endif$
+    #v(3em)
+    #text(size: 13pt)[$author$]
+  ]
+  #v(1fr)
+  #align(center, text(size: 9pt, fill: luma(90))[
+    $if(date)$$date$$endif$
+  ])
+]
+
+// ---------- Contents ----------
+#show outline.entry.where(level: 1): it => {
+  if is-part(it.element) {
+    v(0.9em, weak: true)
+    strong(it)
+  } else {
+    v(0.3em, weak: true)
+    it
+  }
+}
+#heading(level: 1, outlined: false)[विषय-सूची]
+#columns(2, gutter: 2em, outline(title: none, depth: $toc-depth$, indent: 0pt))
+
+$body$
