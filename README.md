@@ -1,6 +1,6 @@
 # संस्कृत स्वयं-शिक्षक — संशोधित संस्करण
 
-A corrected transcription of **संस्कृत स्वयं-शिक्षक** (*Sanskrit Svayam Shikshak*) by Pt. Shripad Damodar Satvalekar, the Hindi-medium Sanskrit self-teacher, prepared from the scanned 2016 Rajpal & Sons printing (`Sanskrit Svayam Shikshak - S D Satvalekar.pdf`).
+A corrected transcription of **संस्कृत स्वयं-शिक्षक** (*Sanskrit Svayam Shikshak*) by Pt. Shripad Damodar Satvalekar, the Hindi-medium Sanskrit self-teacher, prepared from the 2016 Rajpal & Sons printing.
 
 Every page of the scan was OCR'd and then proofread by eye against the page image, and the finished edition was then read once more from beginning to end for sense and continuity between lessons. Typographical errors, wrong verb/noun forms, dropped anusvāras and visargas, misnumbered footnotes and wrong cross-references have been corrected. Substantive corrections are recorded in `errata.md`.
 
@@ -42,7 +42,3 @@ The PDF is a typeset A5 book: title page, two-column contents, part-title pages,
 ## Errata
 
 `errata.md` lists each correction as *page – original – corrected – note*, using the printed page numbers of the original. Pure OCR artefacts and the silent normalisations listed above are not included.
-
-## Copyright
-
-The original work is by Pt. S. D. Satvalekar (1867–1968). This transcription was prepared for personal study from a copy of the printed book; check the copyright status of the text in your jurisdiction before redistributing it.
